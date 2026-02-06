@@ -1,13 +1,16 @@
-const express = require("express");
-const cors = require("cors");
+import express from "express";
+import authRoutes from "./routes/authRoutes.js";
+import animalRoutes from "./routes/animalRoutes.js";
+import progresoRoutes from "./routes/progresoRoutes.js";
 
 const app = express();
 
-app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Backend funcionando correctamente 🚀");
-});
+app.use("/api/auth", authRoutes);
 
-module.exports = app;
+app.use("/api/animals", animalRoutes);
+
+app.use("/api/progreso", progresoRoutes);
+
+export default app;

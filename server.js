@@ -1,9 +1,13 @@
-require("dotenv").config();
-const app = require("./src/app");
-const connectDB = require("./src/config/db");
+import app from "./src/app.js";
+import connectDB from "./src/config/db.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 connectDB();
 
-app.listen(process.env.PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${process.env.PORT}`);
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
