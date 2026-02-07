@@ -1,17 +1,13 @@
 import express from "express";
-import {
-  crearAnimal,
-  obtenerAnimales,
-} from "../controllers/animalController.js";
+import { crearAnimal, obtenerAnimales } from "../controllers/animalController.js";
 import authMiddleware from "../middlewares/authMiddleware.js";
-import roleMiddleware from "../middlewares/roleMiddleware.js";
 
 const router = express.Router();
 
-// 🟢 Ver animales (NIÑO y PADRE)
-router.get("/", authMiddleware, obtenerAnimales);
+// SOLO para cargar animales (temporal)
+router.post("/", crearAnimal);
 
-// 🔒 Crear animal (SOLO PADRE)
-router.post("/", authMiddleware, roleMiddleware(["PADRE"]), crearAnimal);
+// Niño ve animales desbloqueados (REQUIERE TOKEN)
+router.get("/", authMiddleware, obtenerAnimales);
 
 export default router;

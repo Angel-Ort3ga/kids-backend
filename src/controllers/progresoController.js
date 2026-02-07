@@ -1,37 +1,46 @@
 import Progreso from "../models/Progreso.js";
 
-// 🧒 Niño guarda progreso
 export const guardarProgreso = async (req, res) => {
   try {
+    console.log("USUARIO:", req.usuario);
+    console.log("BODY:", req.body);
+
     const progreso = await Progreso.findOneAndUpdate(
+      { usuario: req.usuario.id },
       {
-        nino: req.usuario.id,
-        modulo: req.body.modulo,
+        nivelActual: req.body.nivelActual,
+        animalesDesbloqueados: req.body.animalesDesbloqueados
       },
-      req.body,
-      { new: true, upsert: true },
+      {
+        new: true,
+        upsert: true
+      }
     );
 
     res.json(progreso);
   } catch (error) {
-    console.error("ERROR REAL:", error.message);
+    console.error("🔥 ERROR REAL COMPLETO:", error);
 
-    res.status(400).json({ message: "Error al guardar progreso" });
+    res.status(400).json({
+      message: error.message
+    });
   }
 };
 
-// 👨‍👩‍👦 Padre ve progreso
 export const verProgreso = async (req, res) => {
   try {
-    const progreso = await Progreso.find({ nino: req.params.id }).populate(
-      "nino",
-      "nombre",
-    );
+    const progreso = await Progreso.findOne({
+      usuario: req.usuario.id
+    }).populate("animalesDesbloqueados");
+
+    if (!progreso) {
+      return res.status(404).json({ message: "Progreso no encontrado" });
+    }
 
     res.json(progreso);
   } catch (error) {
-    console.error("ERROR REAL:", error.message);
-
+    console.error(error);
     res.status(500).json({ message: "Error al obtener progreso" });
   }
 };
+

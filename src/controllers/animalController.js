@@ -1,21 +1,38 @@
 import Animal from "../models/Animal.js";
+import Progreso from "../models/Progreso.js";
 
-// 🟢 Crear animal (PADRE)
-export const crearAnimal = async (req, res) => {
+// 🧒 Niño ve animales desbloqueados
+export const obtenerAnimales = async (req, res) => {
+  console.log("USUARIO:", req.usuario);
+
   try {
-    const animal = await Animal.create(req.body);
-    res.status(201).json(animal);
+    const progreso = await Progreso.findOne({
+      usuario: req.usuario.id
+    });
+
+    if (!progreso) {
+      return res.status(404).json({ message: "Progreso no encontrado" });
+    }
+
+    const animales = await Animal.find({
+      nivel: { $lte: progreso.nivelActual }
+    });
+
+    res.json(animales);
   } catch (error) {
-    res.status(400).json({ message: "Error al crear animal", error });
+    console.error(error);
+    res.status(500).json({ message: "Error al obtener animales" });
   }
 };
 
-// 🟢 Obtener todos (NIÑO / PADRE)
-export const obtenerAnimales = async (req, res) => {
+// 🛠️ SOLO PARA PRUEBAS (luego se elimina)
+export const crearAnimal = async (req, res) => {
   try {
-    const animales = await Animal.find();
-    res.json(animales);
+    const animal = new Animal(req.body);
+    await animal.save();
+    res.status(201).json(animal);
   } catch (error) {
-    res.status(500).json({ message: "Error al obtener animales" });
+    console.error(error);
+    res.status(400).json({ message: "Error al crear animal" });
   }
 };
