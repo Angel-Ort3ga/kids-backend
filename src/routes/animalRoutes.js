@@ -4,10 +4,10 @@ import authMiddleware from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-// SOLO para cargar animales (temporal)
+// Crear animal (solo pruebas / seed)
 router.post("/", crearAnimal);
 
-// Niño ve animales desbloqueados (REQUIERE TOKEN)
+// Niño ve animales (REQUIERE TOKEN)
 router.get("/", authMiddleware, obtenerAnimales);
 
 export default router;
