@@ -76,9 +76,9 @@ export const login = async (req, res) => {
 export const perfil = async (req, res) => {
   try {
     res.json({
-      id: req.user.id,
-      nombre: req.user.nombre,
-      rol: req.user.rol,
+      id: req.usuario.id,
+      nombre: req.usuario.nombre,
+      rol: req.usuario.rol,
     });
   } catch (error) {
     res.status(500).json({ message: "Error al obtener perfil" });

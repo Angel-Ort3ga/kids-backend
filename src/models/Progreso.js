@@ -4,24 +4,18 @@ const progresoSchema = new mongoose.Schema({
   usuario: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    required: true
+    required: true,
   },
-  animalesDesbloqueados: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Animal"
-    }
-  ],logrosDesbloqueados: [
-  {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Logro"
-  }
-],
   nivelActual: {
     type: Number,
-    default: 1
-  }
-  
-});
+    default: 1,
+  },
+  logrosDesbloqueados: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Logro",
+    },
+  ],
+}, { timestamps: true });
 
 export default mongoose.model("Progreso", progresoSchema);

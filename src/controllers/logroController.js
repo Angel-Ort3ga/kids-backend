@@ -10,14 +10,6 @@ export const evaluarLogros = async (progreso) => {
     if (logro.condicion === `nivel_${progreso.nivelActual}`) {
       nuevosLogros.push(logro._id);
     }
-
-    if (
-      logro.condicion.startsWith("animales_") &&
-      progreso.animalesDesbloqueados.length >=
-        parseInt(logro.condicion.split("_")[1])
-    ) {
-      nuevosLogros.push(logro._id);
-    }
   }
 
   progreso.logrosDesbloqueados.push(...nuevosLogros);
