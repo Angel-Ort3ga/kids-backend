@@ -12,7 +12,10 @@ export const evaluarLogros = async (progreso) => {
     }
   }
 
-  progreso.logrosDesbloqueados.push(...nuevosLogros);
+  if (nuevosLogros.length > 0) {
+    progreso.logrosDesbloqueados.push(...nuevosLogros);
+    await progreso.save(); // 👈 persistimos cambios
+  }
 };
 
 // Crear logro
@@ -22,7 +25,6 @@ export const crearLogro = async (req, res) => {
     await logro.save();
     res.status(201).json(logro);
   } catch (error) {
-    console.error(error);
     res.status(400).json({ message: "Error al crear logro" });
   }
 };

@@ -1,6 +1,6 @@
 import { Router } from "express";
-import authMiddleware from "../middlewares/authMiddleware.js";
-import {verProgreso, subirNivel, dashboard, perfil} from "../controllers/progresoController.js";
+import {authMiddleware} from "../middlewares/authMiddleware.js";
+import {verProgreso, subirNivel, dashboard, perfil,} from "../controllers/progresoController.js";
 
 const router = Router();
 
