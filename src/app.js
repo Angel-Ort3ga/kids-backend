@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
-
+import seed from "./seed/contenidoSeed.js";
 import contenidoRoutes from "./routes/contenidoRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import progresoRoutes from "./routes/progresoRoutes.js";
@@ -24,6 +24,10 @@ app.use(express.json());
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ Conectado a MongoDB Atlas"))
   .catch(err => console.error("❌ Error de conexión a Mongo:", err));
+if (process.env.RUN_SEED === "true") {
+      await seed(); // ejecuta tu seed
+      console.log("Seed ejecutado");
+    }
 
 app.get("/ping", (req, res) => res.json({ ok: true }));
 
@@ -35,11 +39,5 @@ app.use("/api/logros", logroRoutes);
 
 // Middleware global de errores
 app.use(errorHandler);
-
-// Puerto dinámico para Render
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en puerto ${PORT}`);
-});
 
 export default app;
