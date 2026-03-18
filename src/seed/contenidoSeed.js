@@ -65,25 +65,7 @@ const seedData = async () => {
   await Contenido.deleteMany();
   await Contenido.insertMany(contenidos);
   console.log("Contenido cargado correctamente ✅");
-  process.exit();
+
 };
-export default async function runSeed() {
-  try {
-    await mongoose.connect(process.env.MONGO_URI);
-    console.log("✅ Conectado a Mongo Atlas");
 
-    await Animal.deleteMany({});
-    await Numero.deleteMany({});
-    await Color.deleteMany({});
-
-    await Animal.insertMany(animales);
-    await Numero.insertMany(numeros);
-    await Color.insertMany(colores);
-
-    console.log("🌱 Seed cargado correctamente");
-  } catch (error) {
-    console.error("❌ Error en seed:", error);
-  }
-}
-
-seedData();
+export default seedData;
