@@ -14,21 +14,28 @@ const allowedOrigins = [
   "https://kisdgame.netlify.app"
 ];
 
-app.use(cors({
+const corsOptions = {
   origin: (origin, callback) => {
     if (!origin) return callback(null, true);
 
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     } else {
-      return callback(null, false); // 👈 CAMBIO CLAVE
+      return callback(null, false);
     }
   },
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
-}));
-app.options("*", cors());
+};
+
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
+
+app.use((req, res, next) => {
+  console.log("Origin:", req.headers.origin);
+  next();
+});
 
 app.use(express.json());
 
