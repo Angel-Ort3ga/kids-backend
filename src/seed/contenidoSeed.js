@@ -68,4 +68,8 @@ const seedData = async () => {
 
 };
 
+seedData().then(() => {
+  console.log("🌱 Seed terminado");
+  process.exit();
+});
 export default seedData;
