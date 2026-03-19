@@ -10,11 +10,11 @@ const logroSchema = new mongoose.Schema({
     required: true
   },
   icono: {
-    type: String, // emoji o url
+    type: String,
     required: true
   },
   condicion: {
-    type: String, // ej: "nivel_2", "animales_5"
+    type: String, 
     required: true
   }
 });

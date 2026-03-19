@@ -3,10 +3,9 @@ import Progreso from "../models/Progreso.js";
 import User from "../models/User.js";
 import Logro from "../models/Logro.js";
 
-// reglas dinámicas para cada categoría
 const reglas = {
   animal: { totalNiveles: 3, respuestasPorNivel: 4 },
-  numero: { totalNiveles: 3, respuestasPorNivel: 3 }, // 👈 ajusta aquí según tu seed
+  numero: { totalNiveles: 3, respuestasPorNivel: 3 },
   color:  { totalNiveles: 3, respuestasPorNivel: 4 },
 };
 
@@ -26,7 +25,6 @@ const crearProgresoSiNoExiste = async (usuarioId) => {
   return progreso;
 };
 
-// ✅ Obtener contenidos con respuestasPorNivel
 export const obtenerContenido = async (req, res) => {
   try {
     const { tipo } = req.query;
@@ -61,8 +59,6 @@ export const obtenerContenido = async (req, res) => {
   }
 };
 
-
-// ✅ Ver progreso
 export const verProgreso = async (req, res) => {
   try {
     const progreso = await crearProgresoSiNoExiste(req.user.id);
@@ -72,7 +68,6 @@ export const verProgreso = async (req, res) => {
   }
 };
 
-// ✅ Subir nivel con reglas unificadas
 export const subirNivel = async (req, res) => {
   try {
     const { tipo, correcto } = req.body;
@@ -136,7 +131,6 @@ export const subirNivel = async (req, res) => {
   }
 };
 
-// ✅ Dashboard y perfil ya usan reglas correctas
 export const dashboard = async (req, res) => {
   try {
     if (req.user.rol !== "PADRE") {

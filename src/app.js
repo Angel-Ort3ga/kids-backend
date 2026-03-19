@@ -18,14 +18,18 @@ const corsOptions = {
   origin: (origin, callback) => {
     if (!origin) return callback(null, true);
 
+    // ✅ permitir dominio principal
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
-    } else {
-      return callback(null, false);
     }
+
+    // ✅ permitir previews de Netlify
+    if (origin.includes("netlify.app")) {
+      return callback(null, true);
+    }
+
+    return callback(null, false);
   },
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
 };
 
